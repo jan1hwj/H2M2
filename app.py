@@ -23,10 +23,11 @@ def interaction_1():
         upld_path = cwd+'/static/imgs/'+file_name
         f.save(upld_path)
         img_path = 'imgs/'+file_name
+        # generated_img_path = 'imgs/' + os.path.basename(generated_img_path)
 
-        (caption, story) = runModels(upld_path)
+        (caption, story, generated_img_path) = runModels(upld_path)
 
-        return render_template('milestone1.html', active='interaction_1', imgPath=img_path, story=story, caption=caption)  
+        return render_template('milestone1.html', active='interaction_1', imgPath=img_path, story=story, caption=caption, generated_img_path=generated_img_path)  
 
     else:
         return render_template('milestone1.html', active='interaction_1')
