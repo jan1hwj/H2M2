@@ -11,7 +11,7 @@ function setup(){
     // pic = createImage(imgURL);
     if(imgURL){
         loadImage(imgURL, (loadImage)=>{
-            pic = loadedImage;
+            pic = loadImage;
         },(error)=>{
             console.error("Error is: ", error);
         });
@@ -26,9 +26,9 @@ function draw(){
     if(pic){
         image(pic,0,0,width,height);
     }else{
-        fill(33,33,33);
+        fill(255);
         textAlign(CENTER);
         textSize(32);
-        text("Loading iamge...", width/2, height/2);
+        text("Loading image...", width/2, height/2);
     }
 }
