@@ -5,3 +5,4 @@ torch
 pillow
 transformers
 openai
+__pycache__
