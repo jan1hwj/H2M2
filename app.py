@@ -12,9 +12,6 @@ app =Flask(__name__, template_folder = 'templates', static_folder='static',stati
 def index():
     return render_template('about.html', active='index')
 
-# @app.route('/milestone1')
-# def interaction_1():
-#     return redirect("https://github.com/jan1hwj/H2M1")
 @app.route('/milestone1')
 def interaction_1():
     return render_template('milestone1.html', active='interaction_1')
@@ -30,7 +27,6 @@ def interaction_2():
         upld_path = cwd+'/static/imgs/'+file_name
         f.save(upld_path)
         img_path = 'imgs/'+file_name
-        # generated_img_path = 'imgs/' + os.path.basename(generated_img_path)
 
         selected_style = request.form.get('style')
         (caption, story, generated_img_path) = runModels_langChain(upld_path, selected_style)

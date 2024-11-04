@@ -3,9 +3,35 @@ from openai import OpenAI
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain.chains import RetrievalQA
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceEmbeddings
 import requests
 import os
 import time
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+
+# Load the FAISS index
+index_dir = os.path.join(os.path.dirname(__file__), 'data', 'faiss_index')
+embedding_model = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
+faiss_index = FAISS.load_local(index_dir, embedding_model, allow_dangerous_deserialization=True)
+
+def retrieve_style_info(style):
+    
+    logging.info(f"Retrieving style information for: {style}")
+
+    retriever = faiss_index.as_retriever()
+    rag_chain = RetrievalQA.from_chain_type(
+        llm = ChatOpenAI(model="gpt-4o-mini"),
+        retriever = retriever,
+        chain_type = "stuff"
+    )
+    result = rag_chain({"query": f"Tell me about the {style} painting style."})
+    logging.info(f"Retrieved style information: {result['result']}")
+    return result['result']
 
 def img2text(url):
     img_to_text_pipe = pipeline("image-to-text", model="Salesforce/blip-image-captioning-large")
@@ -37,22 +63,23 @@ def textGeneration_langChain(msg):
     out_message = chain.invoke({"scenario_lang" : msg})
     return out_message
 
-def imageGeneration_langChain(scenario, styles):
+def imageGeneration_langChain(scenario, styles, style_info):
+
+    logging.info(f"Generating image for scenario: '{scenario}' with style: '{styles}'")
+    logging.info(f"Style information used in prompt: {style_info}")
     
     image_prompt_template = ChatPromptTemplate.from_messages(
         [
             (
                 "system",
-                "Generate an image in the {styles_lang} style based on the scenario: '{scenario_lang}'"
+                "Generate an image in the {styles_lang} style, described as: '{style_info}'. The scenario is: '{scenario_lang}'"
             ),
             ("human", "{scenario_lang}")
         ]
     )
 
-    prompt = image_prompt_template.format(scenario_lang=scenario, styles_lang=styles)
-
-    print("Generated Prompt for DALL-E:")
-    print(prompt)
+    prompt = image_prompt_template.format(scenario_lang=scenario, styles_lang=styles, style_info=style_info)
+    logging.info(f"Generated Prompt for DALL-E: {prompt}")
 
     client = OpenAI()
     imageResponse = client.images.generate(
@@ -64,6 +91,7 @@ def imageGeneration_langChain(scenario, styles):
     )
 
     img_url = imageResponse.data[0].url
+    logging.info(f"Generated image URL: {img_url}")
     return img_url
 
 def saveImage(image_url, save_path):
@@ -72,22 +100,22 @@ def saveImage(image_url, save_path):
     if response.status_code == 200:
         with open(save_path, 'wb') as file:
             file.write(response.content)
-        print(f"Image saved to {save_path}")    
+        logging.info(f"Image saved to {save_path}")    
     else:
-        print("Failed")
+        logging.error("Failed to save image")
 
 def runModels_langChain(url, styles):
     scenario = img2text(url)
     story = textGeneration_langChain(scenario)
-    img_url = imageGeneration_langChain(scenario, styles)
+    style_info = retrieve_style_info(styles)
+    img_url = imageGeneration_langChain(scenario, styles, style_info)
 
     save_folder = 'static/imgs'
     os.makedirs(save_folder, exist_ok=True)
     file_name = f"generated_image_{int(time.time())}.png"
     save_path = os.path.join(save_folder, file_name)
 
-    print(f"Image URL: {img_url}")
-    # print(f"Saving image to: {save_path}")
+    logging.info(f"Image URL: {img_url}")
 
     saveImage(img_url, save_path)
     relative_path = os.path.join('imgs', file_name)

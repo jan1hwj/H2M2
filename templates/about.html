@@ -4,8 +4,8 @@
   <div class="row">
     <div class="col-12">
       <br>
-      <h1 class="text-center display-3">Imaginarium</h1>
-      <p style="width: 70%; margin:auto; margin-top:2%; margin-bottom: 2%">The concept of my application is the communication model of messages - how messages are distorted through the communication process. The user will upload an image to the application, and an image-text model will be used to generate a caption of the image. Then, the caption will be sent to Open AI to generate a story based on the caption. After that, the story will be sent to another text-image model, and another image will be generated based on the story and displayed on the webpage. By juxtaposing two images within the same webpage, people might notice how different the two images changed before and after the “communication” between models. Some details are added to the image while some are lost through the process, mirroring the fact that messages in daily communication are also easy to be distorted.</p>
+      <h1 class="text-center display-3">Artistry Generation</h1>
+      <p style="width: 70%; margin:auto; margin-top:2%; margin-bottom: 2%">Artistry Generation is an interactive web application that combines image recognition, Retrieval-Augmented Generation (RAG), and AI-powered image generation to create art in various painting styles. Users can upload an image, select a painting style, and watch as the app generates a short story and a new image inspired by the uploaded photo and chosen style. Powered by models from OpenAI and Hugging Face, along with style data from Wikipedia, Artistry Generation brings creative expression and art history together, allowing users to explore and visualize artistic styles in a unique, immersive way.</p>
     </div>
   </div>
   <div class="row justify-content-center">
@@ -16,10 +16,10 @@
           <h4 class="card-title" style="margin-bottom: 3%;">Milestone 1: Initial Development and AI Integration</h4>
           <p>Start your journey into AI-driven storytelling with Milestone 1. This phase focuses on setting up the foundational technology stack and integrating advanced AI models to transform images into captivating narratives.</p>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Image-to-Text:</strong> Utilize Hugging Face’s model to extract descriptive captions from uploaded images.</li>
-            <li class="list-group-item"class="list-group-item"><strong>Story Generation:</strong> Employ OpenAI's GPT-4 to craft engaging short stories based on the captions.</li>
-            <li class="list-group-item"><strong>Interactive Display:</strong> Stories are dynamically presented on a P5.js canvas with accompanying narration via the P5.js speech library.</li>
-            <li class="list-group-item"><strong>Framework:</strong> Built using Flask and styled with Bootstrap for a robust and responsive user experience.</li>
+            <li class="list-group-item"><strong>Image-to-Text:</strong> Leverages Hugging Face's model to analyze and generate detailed captions from uploaded images.</li>
+            <li class="list-group-item"class="list-group-item"><strong>Story Generation:</strong> Employs OpenAI's GPT-4 to transform image captions into captivating short stories.</li>
+            <li class="list-group-item"><strong>Text-to-Image:</strong> Utilizes another Hugging Face's model to generate a brand new image inspired by the generated stories. Note: In Milestone 2 I turned to OpenAI's DALL-E model for a speedy generation.</li>
+            <li class="list-group-item"><strong>Framework:</strong> Develops with Flask for backend functionality and styled with Bootstrap to ensure a visually cohesive interface.</li>
           </ul>
         </div>
       </div>
@@ -29,12 +29,12 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title" style="margin-bottom: 3%;">Milestone 2: Advanced Features and Enhanced Interactivity</h4>
-          <p>Elevate the narrative experience in Milestone 2 by incorporating the LangChain library to add depth and interactivity to your stories. Select from various genres and enjoy contextually enriched narratives.</p>
+          <p>Significantly improving the speed of image generation by redirecting from Hugging Face's model to Open AI. Incorporating LangChain templates and RAG to generate style-specific and contextually enriched images.</p>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Genre Selection:</strong> Users can choose from six genres, tailoring the storytelling to their preferences.</li>
-            <li class="list-group-item"><strong>Prompt Templates and RAG:</strong> Enhance the narrative quality with structured prompts and contextually rich content using Retrieval-Augmented Generation.</li>
-            <li class="list-group-item"><strong>Customized Narration:</strong> Different voices from the P5.js speech library match the selected genres, enriching the auditory experience.</li>
-            <li class="list-group-item"><strong>Mood-Driven Backgrounds:</strong> Background imagery on the P5.js canvas adapts to the genre, setting the appropriate mood and atmosphere.</li>
+            <li class="list-group-item"><strong>Style Selection:</strong> Users can select from six distinct painting styles to enhance the mood of the generated artwork.</li>
+            <li class="list-group-item"><strong>Dynamic Dataset with FAISS:</strong> Utilizes FAISS indexing and the Wikipedia API to build a rich textual dataset on painting styles, enabling contextually informed prompts for LangChain Library.</li>
+            <li class="list-group-item"><strong>LangCahin Templates and RAG:</strong> Integrates structured prompt templates with RAG to provie more vivid, style-specific results.</li>
+            <li class="list-group-item"><strong>Interactive Display:</strong> Users can toggle between the generated story and image, allowing a deeper appreciation of the narrative behind the artwork.</li>
           </ul>
         </div>
       </div>

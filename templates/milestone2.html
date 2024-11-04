@@ -55,19 +55,16 @@
         <div class="col-6" >
             <div class="d-flex justify-content-center" 
                 id="canvas-div" 
-                data-story="{% if imgPath %} {{story}} {% else %}Waiting for the story...{%endif %}"
+                data-story="{% if imgPath %} {{story}} {% else %}Complete Step 1 & 2 first!{%endif %}"
                 data-generated-img="{% if generated_img_path %}{{ generated_img_path }}{% else %} {% endif %}">
             </div>
             <br>
-            <p>{{ story }}</p>
-            <div class="row">
-                <div class="col-6 text-center" id="startBtnDiv">
-                    <!-- <button type="button" class="btn btn-primary" id="startBtn">Start Narrating!</button> -->
-                </div>
-                <div class="col-6 text-center" id="stopBtnDiv">
-                    <!-- <button type="button" class="btn btn-danger" id="stopBtn">Stop Narrating!</button> -->
-                </div>
+            <div class="text-center">
+                <button id="showStoryBtn" class="btn btn-secondary">Show Story</button>
+                <button id="showImageBtn" class="btn btn-secondary">Show Image</button>
             </div>
+            <br>
+            <!-- <p>{{ story }}</p> -->
             
         </div>   
     </div>

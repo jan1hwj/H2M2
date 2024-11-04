@@ -21,3 +21,12 @@ To run the tool locally download the code and follow the steps below:
     - `FLASK_DEBUG = True`
     - `HF_TOKEN = ""`
     - `OPENAI_API_KEY = ""`
+
+## Required setup for my project:
+---
+I use FAISS and Wikipedia API to create the dataset used for LangChain RAG. The following commands should be run before running the Flask app to save the FAISS Index locally. The code only need to be run once.
+- Change the directory to the Scripts folder
+    - Assuming your project is in C:\Users\YourUsername\Documents\project-folder
+    - `cd C:\Users\YourUsername\Documents\project-folder\scripts`
+- Create the FAISS Index
+    - `python scripts/create_faiss_index.py`
